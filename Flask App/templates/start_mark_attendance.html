@@ -1,0 +1,91 @@
+<h3>MARK ATTENDANCE:</h3>
+    <div id="hour">{{hour}}</div>
+
+    <table class="table table-striped">
+        {% for i in student_list %}
+        <tr>
+            <td class="content">{{i[0]}}</td>
+            <td>
+                {{ i[1] }} {{ i[2] }}
+            </td>
+            <td> <button type="button" class="btn1 btn btn-success">Present</button> </td>
+            <td> <button type="button" class="btn2 btn btn-danger">Absent</button> </td>
+            <td> <button type="button" class="btn3 btn btn-secondary">Edit</button> </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td> <button type="button" id="submit" class="btn btn-primary">Submit</button> </td>
+        </tr>
+    </table>
+    
+    <script>
+        $(document).ready(function () {
+            var present = [];
+            var absent = [];
+            var hr = [parseInt($("#hour").text())];
+            var select;
+            
+            $(".btn-success").on("click", function () {
+                var x;
+                select = $(this);
+                $(this).addClass('focus');
+                x = $(this).closest('tr').find('.content').text();
+                console.log(x);
+                present.push(x);
+                console.log(present);
+                $(this).prop('disabled',true);
+                $(this).closest('tr').find('.btn2').prop('disabled',true);
+                
+                
+            });
+            $(".btn-danger").on("click", function (e) {
+                var x;
+                select = $(this);
+                $(this).addClass('focus');
+                x = $(e.target).closest('tr').find('.content').text();
+                absent.push(x);
+                console.log(absent);
+                $(this).prop('disabled',true);
+                $(this).closest('tr').find('.btn1').prop('disabled',true);
+                
+            });
+           
+            $(".btn3").click(function() {
+                var x = $(this).closest('tr').find('.content').text();
+                var index = present.indexOf(x);
+                if (index > -1) {
+                    present.splice(index,1);
+                }
+                console.log(present);
+                var index = absent.indexOf(x);
+                if (index > -1) {
+                    absent.splice(index,1);
+                }
+                console.log(absent);
+                $(this).closest('tr').find('.btn1').prop('disabled',false);
+                $(this).closest('tr').find('.btn2').prop('disabled',false);
+            });
+
+            $("#submit").on("click", function () {
+                console.log(present);
+                console.log(absent);
+        
+                var js_obj = {x_present:present,x_absent:absent,hour:hr};
+                var js_str = JSON.stringify(js_obj);
+                console.log(js_obj);
+                console.log(js_str);
+               
+                $.ajax({
+                    url: "http://127.0.0.1:5000/insert_attendance",
+                    method: "POST",
+                    dataType: "JSON",
+                    data:js_str,
+                    success: function (response) {
+                        alert("success");
+                    }
+                }); 
+            });
+        });
+
+
+    </script>

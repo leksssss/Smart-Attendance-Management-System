@@ -1,0 +1,96 @@
+{% extends 'base_faculty.html' %}
+
+{% block body %}
+<!--{% block name %}{{ faculty_name }} {% endblock name%}-->
+<table class="table table-hover " style="text-align: center;">
+    <thead class="thead-dark">
+    <tr>
+        <th>Course Id</th>
+        <th>Course Name</th>
+    </tr>
+</thead>
+    {% for i in faculty_course :%}
+    <tr class="row_click" data-toggle="modal" data-target="#myModal">
+        {% for j in i :%}
+
+        <td>{{ j }}</td>
+
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header bg-danger">
+          <h4 class="modal-title">Students with Attendance Shortage</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+<script>
+    $(document).ready(function () {
+        var disp_bunk_details = $(".modal-body");
+        $(".row_click").click(function (e) {
+            var clicked_value = $(e.target).parent().find('td:eq(0)').text();
+            console.log(clicked_value);
+            var js_str = { "course_id": '' + clicked_value + '' };
+            console.log(typeof js_str);
+
+            $.ajax({
+                url: "http://127.0.0.1:5000/attendance_shortage_student_details",
+                method: "post",
+                dataType: "json",
+                data: js_str,
+                success: function (data) {
+                   // alert(data.list.length);
+                    console.log(data);
+                    var str = "<table class='table' style='text-align:center;'><thead class='thead'>" +
+                        "<tr><th>Roll Number</th><th>First Name</th><th>Last Name</th><th>Percentage</th></tr></thead>";
+                    var i = 0;
+
+                    if (data.list.length == data.len) {
+                        str = "No Shortage Of Attendance";
+                    }
+                    else {
+                    for (i = 4; i < data.list.length; i++) {
+                        if (i % data.len == 0) {
+                            str = str + "<tr><td>" + data.list[i] + "</td>";
+                        }
+                        //<table><tr><td>rollno</td>
+                        else if (i % data.len == data.len - 1) {
+                            str = str + "<td>" + data.list[i] + "</td></tr>";
+                        }
+                        else {
+                            str = str + "<td>" + data.list[i] +"</td>";
+                        }
+                    }
+                    str = str + "</table>";
+                }
+       
+                     
+                           
+                console.log(str);
+                disp_bunk_details.html(str);
+                        }
+                    });
+            });
+        });
+</script>
+{% endblock body %}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Required meta tags -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+          <title> 
+            {% block title %}
+            
+            {% endblock title %} 
+          </title>
+        {% block head %}
+        
+        {% endblock head %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-danger">
+            <a class="navbar-brand" href="#"  style="text-align:center;"><span style="font-family:fantasy;text-align:center;">CeGsAs</span></a>
+          
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item ">
+                  <a class="nav-link" href="http://127.0.0.1:5000/faculty_details_to_home">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="http://127.0.0.1:5000/faculty_details">Details</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="http://127.0.0.1:5000/mark_attendance">Mark Attendance</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="http://127.0.0.1:5000/attendance_shortage">Attendance Shortage</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="http://127.0.0.1:5000/logout">Logout</a>
+                </li>
+               </ul>
+               <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                 <a class="nav-link name" href="#"><span style="font-weight:bold;">{% block name %}{% endblock name %}</a>
+               </li>
+             </ul>
+            </div>
+          </nav>
+        
+          
+          
+        {% block body %}
+            
+
+        {% endblock body %}
+
+        <script>
+          $(document).ready(function(){
+              var disp_bunk_details = $(".modal-body");
+              $(".row_click").click(function(e){
+                  var clicked_value = $(e.target).parent().find('td:eq(0)').text();
+                  console.log(clicked_value);
+                  var js_str = { "course_id" : '' + clicked_value +''};
+                  console.log(typeof js_str);
+                 
+                  $.ajax({
+                      url:"http://127.0.0.1:5000/attendance_shortage_student_details",
+                      method:"post",
+                      dataType:"json",
+                      data: js_str,
+                      success : function(data) {
+                          console.log(data);
+                          disp_bunk_details.html(data.msg);
+                      }
+                  });
+              });
+              
+              
+        });
+        
+      </script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    </body>
+</html>

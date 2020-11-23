@@ -1,0 +1,22 @@
+{% extends 'base_faculty.html' %}
+
+{% block body %}
+    <!--{% block name %}{{ faculty_name }} {% endblock name%}-->
+    <table class="table table-striped" style="text-align: center;">
+        <thead class="thead-dark">
+        <tr>
+            <th>Course Id</th>
+            <th>Course Name</th>
+        </tr>
+    </thead>
+        {% for i in faculty_course :%}
+            <tr>
+            {% for j in i :%}
+                
+                    <td> {{ j }} </td>
+                
+            {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock body %}

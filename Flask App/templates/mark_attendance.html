@@ -1,0 +1,56 @@
+{% extends 'base_faculty.html' %}
+
+{% block body %}
+<!--{% block name %}{{ faculty_name }} {% endblock name%}-->
+    <div id="box">
+    <h5>Choose number of hours</h2>
+    <select class="hour">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    </select>
+   <h5>CHOOSE SUBJECT</h2>
+    <table class="table table-hover ">
+        <tr>
+            <th>Course Id</th>
+            <th>Course Name</th>
+        </tr>
+        {% for i in faculty_course :%}
+            <tr>
+            {% for j in i :%}
+                
+                    <td>{{ j }}</td>
+                
+            {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+    
+
+    <script>
+        $(document).ready(function(){
+            var hr;
+            $("select.hour").change(function(){
+                hr = $(this).children("option:selected").val();
+                
+            });
+            $("tr").on("click",function(){
+                var cid;
+                cid =$(this).find("td:first").text();
+                //alert(hr);
+                $.ajax({
+                    type:'POST',
+                    url:'marking_attendance',
+                    data:JSON.stringify({'course_id':cid,'hour':hr}),
+                    contentType: "application/json; charset=utf-8",
+                    datatype:"json",
+                    success:function(data){
+                        $("#box").load('/start_mark_attendance');
+                    }
+                })
+            });
+        });
+    </script>
+    </div>
+{% endblock body %}

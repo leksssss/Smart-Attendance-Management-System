@@ -1,0 +1,24 @@
+{% extends 'base_student.html' %}
+
+{% block body %}
+    <table class="table table-striped">
+        <tr>
+            <td class="font-weight-bold">Roll Number</td>
+            <td>{{ student_info[0][0] }}</td>
+        </tr>
+        <tr>
+            <td class="font-weight-bold">Name</td>
+            <td>{{ student_info[0][1] + " " + student_info[0][2] + " " + student_info[0][3]}}</td>
+        </tr>
+        <tr>
+            <td class="font-weight-bold">Email ID</td>
+            <td>{{ student_info[0][4] }}</td>
+        </tr>
+        <tr>
+            <td class="font-weight-bold">Date of Birth</td>
+            <td>{{ student_info[0][5] }}</td>
+        </tr>
+
+    </table>
+    
+{% endblock body %}

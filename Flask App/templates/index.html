@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}dkanfknsd{% endblock title %}
+
+{% block head %}
+<style>
+    body{
+        margin: 0px;
+    }
+    img {
+        display: inline;
+        margin: auto;
+    }
+    
+</style>
+{% endblock head %}
+
+{% block body %}
+<!--<a href="http://127.0.0.1:5000/student">Student</a>
+<a href="http://127.0.0.1:5000/faculty">Faculty</a>-->
+<div class="row">
+    <div class="column col-md-6">
+         <img src="../static/main_bg1.png" class="ceg-logo" width="100%" alt="" style="display: block;margin:auto;margin-top:5%;">
+        
+    </div>
+    
+    <div class="column col-md-6 ">
+        <center>
+        <img src="../static/student_logo.png" width="35%" alt="" onmouseover="student_hover(this)"
+            onmouseout="student_unhover(this)" class="student" data-toggle="modal" data-target="#myModal1" style="margin:20% 0% 0% 0%;">
+        <img src="../static/faculty_logo.png" width="35%" alt="" onmouseover="faculty_hover(this)"
+            onmouseout="faculty_unhover(this)" class="faculty" data-toggle="modal" data-target="#myModal2" style="margin:20% 0% 0% 0%;">
+        </center>
+    </div>
+</div>
+<!-- For Student-->
+    <div class="modal" id="myModal1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header bg-danger">
+              <h4 class="modal-title">Student Login</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+      
+            <!-- Modal body -->
+            <center>
+            <div class="modal-body">
+                <center>
+                <form action="http://127.0.0.1:5000/student_login" method="POST">
+                    <div class="form">
+                    
+                      <input type="number" class="form-control" placeholder="Roll Number" name="roll_no" id="email" style="width:40%;">
+                    </div>
+                    <br>
+                    <div class="form">
+                    
+                      <input type="password" class="form-control" placeholder="Password" name="pass_word" id="pwd" style="width:40%;">
+                    </div>
+                </center>
+                    
+            </div>
+        </center>
+      
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value="Login" style="display: block;margin:auto;">
+            </form>
+            </div>
+      
+          </div>
+        </div>
+      </div>
+<!-- For Student-->
+
+<!-- For Faculty -->
+      <div class="modal" id="myModal2">
+        <div class="modal-dialog">
+          <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header bg-danger">
+              <h4 class="modal-title">Faculty Login</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+      
+            <!-- Modal body -->
+            <center>
+            <div class="modal-body">
+                <form action="http://127.0.0.1:5000/faculty_login" method="POST">
+                    <div class="form">
+                   
+                      <input type="text" class="form-control" placeholder="Faculty ID" name="faculty_id" id="email" style="width:40%;">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                     
+                      <input type="password" class="form-control" placeholder="Password" name="pass_word" id="pwd" style="width:40%;">
+                    </div>
+                    
+                    
+            </div>
+        </center>
+      
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value="Login" style="display: block;margin:auto;"  >
+            </form>
+            </div>
+      
+          </div>
+        </div>
+      </div>
+<!-- For Faculty -->
+
+<script>
+    function student() {
+        location.href = "http://127.0.0.1:5000/student";
+    }
+    function faculty() {
+        location.href = "http://127.0.0.1:5000/faculty";
+    }
+    function student_hover(element) {
+        element.setAttribute('src', '../static/student_logo_hover.png');
+    }
+
+    function faculty_hover(element) {
+        element.setAttribute('src', '../static/faculty_logo_hover.png');
+    }
+    function student_unhover(element) {
+        element.setAttribute('src', '../static/student_logo.png');
+    }
+
+    function faculty_unhover(element) {
+        element.setAttribute('src', '../static/faculty_logo.png');
+    }
+    /*
+    $(document).ready(function() {
+        $(".student").click(function() {
+
+        });
+        $(".faculty").click(function() {
+
+        });
+    }); */
+</script>
+{% endblock body %}

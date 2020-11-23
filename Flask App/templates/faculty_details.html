@@ -1,0 +1,21 @@
+{% extends 'base_faculty.html' %}
+
+{% block body %}
+<!--{% block name %}{{ faculty_name }} {% endblock name %}-->
+    <table class="table table-striped">
+        <tr>
+            <td class="font-weight-bold">Faculty ID</td>
+            <td>{{ faculty_info[0][0] }}</td>
+        </tr>
+        <tr>
+            <td class="font-weight-bold">Name</td>
+            <td>{{ faculty_info[0][1] + " " + faculty_info[0][2] + " " + faculty_info[0][3]}}</td>
+        </tr>
+        <tr>
+            <td class="font-weight-bold">Email ID</td>
+            <td>{{ faculty_info[0][4] }}</td>
+        </tr>
+        
+    </table>
+    
+{% endblock body %}
